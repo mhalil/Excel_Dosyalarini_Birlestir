@@ -1,6 +1,7 @@
 """
 Aynı klasörde bulunan excel dosyalarını birleştiren python kodu.
 Tüm dosya içeriği birleştirildikten sonsa "TUMU.xlsx" adında yeni bir dosyaya kaydedilecek.
+Python Kodunun çalışması için bilgisayarınızda "Pandas" ve "openpyxl" kütüphanelerinin / modüllerinin yüklü olması gerekir.
 """
 import pandas as pd
 import os
@@ -28,20 +29,23 @@ def VeriCercevesiBasliksiz(dosya_adi):   # Belirtilen dosya adına göre, dosya 
 """
 Veri çerçevesi oluşturuken, dosya ismini de bir sütuna yazdır.
 """
+data_frame = pd.DataFrame()
 
 for dosya in dosya_isimleri:
 
     if dosya == dosya_isimleri[0]:
         df = VeriCercevesi(dosya)
-        # print(df)
+        data_frame = df
+        # print(dosya, data_frame)
 
     else:
         df_dosya = VeriCercevesiBasliksiz(dosya)
-        df.join(df_dosya)
+        # print(dosya, df_dosya.head())
+        data_frame = pd.concat([data_frame, df_dosya])
 
 
-    # print(dosya, df_dosya.head())
-    # df.join(df_dosya)
+data_frame.to_excel("TUMU.xlsx")
 
-
-# print(df.describe())
+# print(data_frame)
+# print(data_frame.shape)
+# print(data_frame.describe())
