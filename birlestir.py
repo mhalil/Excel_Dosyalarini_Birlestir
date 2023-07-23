@@ -37,4 +37,7 @@ for dosya in dosya_isimleri:
         df_dosya["Dosya_Adi"] = dosya
         data_frame = pd.concat([data_frame, df_dosya])
 
-data_frame.to_excel("TUMU.xlsx")
+# data_frame.dropna(axis=1, inplace=True)     # Kayıp veri barındıran Sütunlar siliniyor ve dosya güncelleniyor / üzerine yazılıyor. Bu kod, sütun içerisinde 1 adet kayıp veri olsa bile o sütunu komple siliyor.
+
+os.remove("TUMU.xlsx")      # Mevcut TUMU.xlsx dosyasını siler. Eğer bu dosya mevcut değilse kod satırını kapatabilir ya da silebilirsiniz. 
+data_frame.to_excel("TUMU.xlsx")    # Tüm dosyalar birleştirildikten sonra sonuç "TUMU.xlsx" ismi ile kaydedilir.
