@@ -6,9 +6,6 @@ Python Kodunun çalışması için bilgisayarınızda "Pandas" ve "openpyxl" kü
 import pandas as pd
 import os
 
-# miktar = int(input("Kaç adet dosya içeriğini birleştirmek istiyorsunuz ?"))
-# ilk_dosya_numarasi = int(input("İlk dosya numarasını yazın. Dosya numaraları sıralı olmalıdır: "))
-
 dosyalar = os.listdir()     # "birlestir.py" dosyasının bulunduğu dizindeki tüm dosya isimlerini, uzantıları ile birlikte al, "dosyalar" isimli değişkene ata.
 dosyalar.sort()             # dosya isimlerini sırala
 
@@ -23,29 +20,21 @@ def VeriCercevesi(dosya_adi):   # Belirtilen dosya adına göre, dosya içeriği
 
 baslik = VeriCercevesi(dosya_isimleri[0]).columns       # ilk dosyanın basligi
 
-def VeriCercevesiBasliksiz(dosya_adi):   # Belirtilen dosya adına göre, dosya içeriğini DataFrame'e çeviren fonksiyon.
+def VeriCercevesiBasliksiz(dosya_adi):   # Belirtilen dosya adına göre, dosya içeriğini Başlıksız DataFrame'e çeviren fonksiyon.
     return pd.read_excel(dosya_adi, header = None, names = baslik, skiprows=[0])  # dosya adındaki başlık silinecek, klasördeki ilk dosyanın başlığı tüm diğer dosyalara başlık olarak eklenecek.
 
-"""
-Veri çerçevesi oluşturuken, dosya ismini de bir sütuna yazdır.
-"""
-data_frame = pd.DataFrame()
+data_frame = pd.DataFrame()     # Verileri toplayacağımız boş bir veri çerçevesi oluşturuyoruz.
 
 for dosya in dosya_isimleri:
 
     if dosya == dosya_isimleri[0]:
         df = VeriCercevesi(dosya)
+        df["Dosya_Adi"] = dosya
         data_frame = df
-        # print(dosya, data_frame)
 
     else:
         df_dosya = VeriCercevesiBasliksiz(dosya)
-        # print(dosya, df_dosya.head())
+        df_dosya["Dosya_Adi"] = dosya
         data_frame = pd.concat([data_frame, df_dosya])
 
-
 data_frame.to_excel("TUMU.xlsx")
-
-# print(data_frame)
-# print(data_frame.shape)
-# print(data_frame.describe())
