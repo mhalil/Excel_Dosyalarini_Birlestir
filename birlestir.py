@@ -1,18 +1,20 @@
 """
 Aynı klasörde bulunan excel dosyalarını birleştiren python kodu.
 Tüm dosya içeriği birleştirildikten sonsa "TUMU.xlsx" adında yeni bir dosyaya kaydedilecek.
-Python Kodunun çalışması için bilgisayarınızda "Pandas" ve "openpyxl" kütüphanelerinin / modüllerinin yüklü olması gerekir.
+Python Kodunun çalışması için bilgisayarınızda "Pandas", "openpyxl" ve "xlrd." kütüphanelerinin / modüllerinin yüklü olması gerekir.
 """
 import pandas as pd
 import os
+
+os.remove("TUMU.xlsx")      # Klasör içindeki "TUMU.xlsx" dosyasını siler. Eğer bu dosya mevcut değilse bu satırı çalıştırmayın ya da silin. 
 
 dosyalar = os.listdir()     # "birlestir.py" dosyasının bulunduğu dizindeki tüm dosya isimlerini, uzantıları ile birlikte al, "dosyalar" isimli değişkene ata.
 dosyalar.sort()             # dosya isimlerini sırala
 
 dosya_isimleri= []      # ".xlsx" ya da ".xls" uzantılı dosyaların toplanacağı boş liste oluştur.
 
-for i in dosyalar:      # Dizindeki tüm dosya isimlerini kontrol et, ".xlsx" ya da ".xls" uzantılı dosyaları "dosya_isimleri" isimli listeye ekle.
-    if ((i[-5:] == ".xlsx") or (i[-4:] == ".xls")):     # dosya uzantılarını kontrol et.
+for i in dosyalar:      # Dizindeki tüm dosya isimlerini kontrol et, ".xlsx", ".xls" ya da ".ods" uzantılı dosyaları "dosya_isimleri" isimli listeye ekle.
+    if ((i[-5:] == ".xlsx") or (i[-4:] == ".xls") or (i[-4:] == ".ods") ):     # dosya uzantılarını kontrol et.
         dosya_isimleri.append(i)
 
 def VeriCercevesi(dosya_adi):   # Belirtilen dosya adına göre, dosya içeriğini DataFrame'e çeviren fonksiyon.
@@ -39,5 +41,4 @@ for dosya in dosya_isimleri:
 
 # data_frame.dropna(axis=1, inplace=True)     # Kayıp veri barındıran Sütunlar siliniyor ve dosya güncelleniyor / üzerine yazılıyor. Bu kod, sütun içerisinde 1 adet kayıp veri olsa bile o sütunu komple siliyor.
 
-os.remove("TUMU.xlsx")      # Mevcut TUMU.xlsx dosyasını siler. Eğer bu dosya mevcut değilse kod satırını kapatabilir ya da silebilirsiniz. 
 data_frame.to_excel("TUMU.xlsx")    # Tüm dosyalar birleştirildikten sonra sonuç "TUMU.xlsx" ismi ile kaydedilir.
