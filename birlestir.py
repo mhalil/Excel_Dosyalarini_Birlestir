@@ -6,26 +6,28 @@ Python Kodunun çalışması için bilgisayarınızda "Pandas", "openpyxl" ve "x
 import pandas as pd
 import os
 
-os.remove("TUMU.xlsx")      # Klasör içindeki "TUMU.xlsx" dosyasını siler. Eğer bu dosya mevcut değilse bu satırı çalıştırmayın ya da silin. 
+dosyalar = os.listdir()     # "birlestir.py" dosyasının bulunduğu dizindeki (klasördeki) tüm dosya isimlerini, uzantıları ile birlikte al, "dosyalar" isimli listeye ekle / ata.
+dosyalar.sort()             # dosyalar listesindeki öğeleri (dosya isimlerini) alfabetik olarak sırala.
 
-dosyalar = os.listdir()     # "birlestir.py" dosyasının bulunduğu dizindeki tüm dosya isimlerini, uzantıları ile birlikte al, "dosyalar" isimli değişkene ata.
-dosyalar.sort()             # dosya isimlerini sırala
+if "TUMU.xlsx" in dosyalar:         # Klasör içinde "TUMU.xlsx" dosyasının olup olmadığını kontrol et, varsa aşağıdaki kodları çalıştır.
+    os.remove("TUMU.xlsx")          # Klasör içindeki "TUMU.xlsx" isimli dosyayı sil.
+    dosyalar.remove("TUMU.xlsx")    # "TUMU.xlsx" isimli öğeyi "dosyalar" listesinden çıkar. 
 
-dosya_isimleri= []      # ".xlsx" ya da ".xls" uzantılı dosyaların toplanacağı boş liste oluştur.
+dosya_isimleri= []                  # ".xlsx", ".xls" ya da ".ods" uzantılı dosyaların toplanacağı boş liste oluştur.
 
-for i in dosyalar:      # Dizindeki tüm dosya isimlerini kontrol et, ".xlsx", ".xls" ya da ".ods" uzantılı dosyaları "dosya_isimleri" isimli listeye ekle.
+for i in dosyalar:                  # Dizindeki tüm dosya isimlerini kontrol et, ".xlsx", ".xls" ya da ".ods" uzantılı dosyaları "dosya_isimleri" isimli listeye ekle.
     if ((i[-5:] == ".xlsx") or (i[-4:] == ".xls") or (i[-4:] == ".ods") ):     # dosya uzantılarını kontrol et.
         dosya_isimleri.append(i)
 
-def VeriCercevesi(dosya_adi):   # Belirtilen dosya adına göre, dosya içeriğini DataFrame'e çeviren fonksiyon.
+def VeriCercevesi(dosya_adi):       # Belirtilen dosya adına göre, dosya içeriğini DataFrame'e çeviren fonksiyon.
     return pd.read_excel(dosya_adi)
 
-baslik = VeriCercevesi(dosya_isimleri[0]).columns       # ilk dosyanın basligi
+baslik = VeriCercevesi(dosya_isimleri[0]).columns   # İlk dosyanın basligini al. Diğer dosyalardaki başlıklar silinecek, bu başlık eklenecek.
 
-def VeriCercevesiBasliksiz(dosya_adi):   # Belirtilen dosya adına göre, dosya içeriğini Başlıksız DataFrame'e çeviren fonksiyon.
-    return pd.read_excel(dosya_adi, header = None, names = baslik, skiprows=[0])  # dosya adındaki başlık silinecek, klasördeki ilk dosyanın başlığı tüm diğer dosyalara başlık olarak eklenecek.
+def VeriCercevesiBasliksiz(dosya_adi):              # Belirtilen dosya adına göre, dosya içeriğini Başlıksız DataFrame'e çeviren fonksiyon.
+    return pd.read_excel(dosya_adi, header = None, names = baslik, skiprows=[0])    # Dosya adındaki başlık silinecek, klasördeki ilk dosyanın başlığı tüm diğer dosyalara başlık olarak eklenecek.
 
-data_frame = pd.DataFrame()     # Verileri toplayacağımız boş bir veri çerçevesi oluşturuyoruz.
+data_frame = pd.DataFrame()         # Verileri toplayacağımız boş bir veri çerçevesi oluşturuyoruz.
 
 for dosya in dosya_isimleri:
 
