@@ -1,4 +1,4 @@
-# Tabloları Birlestir
+# Excel Dosyalarını Birlestir (Merge Excel Files)
 Python dosyası ile aynı klasörde bulunan Excel formatlı (**.xls, .xlsx**) tüm dosya verilerini, belirtilen parametrelere göre birleştiren python kodu.
 Tüm dosya içerikleri birleştirildikten sonsa "**TUMU.xlsx**" adında yeni bir dosyaya kaydedilir.
 Python Kodunun doğru çalışması için bilgisayarınızda "**Pandas**" ve "**openpyxl**" kütüphanelerinin / modüllerinin yüklü olması gerekir.
