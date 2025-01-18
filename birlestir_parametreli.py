@@ -32,10 +32,8 @@ if satir_atla_girdi.isdigit():
 
 sutunlar_girdi = input("Sütun aralığı belirtin. (Ör. A:D) (ya da tüm veri barındıran sütunları kullanmak için ENTER tuşu ile geçin): ")
 sutunlar = None
-if ":" in sutunlar_girdi:
+if sutunlar_girdi:
 	sutunlar = sutunlar_girdi.split(":")[0] + ":" + sutunlar_girdi.split(":")[1]
-else:
-	print("Sütun bildirimi hatalı.")
 # # print(sutunlar)
 #####
 
@@ -50,7 +48,7 @@ def baslik_belirt():
 	return df.columns
 
 baslik = baslik_belirt()
-print("Kullanılacak tablo başlığı:", baslik)
+# # print("Kullanılacak tablo başlığı:", baslik)
 #####
 
 #####
@@ -79,5 +77,7 @@ def tumunu_calistir():
 	print(data_frame)
 	data_frame.to_excel("TUMU.xlsx")    # Tüm dosyalar birleştirildikten sonra sonuç "TUMU.xlsx" ismi ile kaydedilir.
 #####
+
+print("\nBelirlenen Parametrelere istinaden birleştirilen veriler:\n")
 
 tumunu_calistir()
