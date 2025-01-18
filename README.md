@@ -5,4 +5,4 @@ Python Kodunun çalışması için bilgisayarınızda "Pandas" ve "openpyxl" kü
 
 
 ## Ekran Görüntüsü
-![SS](SS.png)
+![SS](resimler/SS.png)
