@@ -7,33 +7,35 @@ import pandas as pd
 from glob import glob
 import os
 
-dosyalar = glob("*.xls*")     # "birlestir.py" dosyasının bulunduğu dizindeki (klasördeki) tüm excel dosya isimlerini, uzantıları ile birlikte al, "dosyalar" isimli listeye ekle / ata.
-dosyalar.sort()             # dosyalar listesindeki öğeleri (dosya isimlerini) alfabetik olarak sırala.
+dosyalar = glob("*.xls*")     		# Python dosyasının bulunduğu dizindeki (klasördeki) tüm excel dosya isimlerini, uzantıları ile birlikte al, "dosyalar" isimli listede topla.
+dosyalar.sort()             		# dosyalar listesindeki öğeleri (dosya isimlerini) alfabetik olarak sırala.
 
 if "TUMU.xlsx" in dosyalar:         # Klasör içinde "TUMU.xlsx" dosyasının olup olmadığını kontrol et, varsa aşağıdaki kodları çalıştır.
     os.remove("TUMU.xlsx")          # Klasör içindeki "TUMU.xlsx" isimli dosyayı sil.
     dosyalar.remove("TUMU.xlsx")    # "TUMU.xlsx" isimli öğeyi "dosyalar" listesinden çıkar.
 
-print("Klasördeki dosya isimleri:", dosyalar)
+# # print("Klasördeki dosya isimleri:", dosyalar)
 
 ##### PARAMETRELER #####
-sayfa_adi = 0		# None değeri tüm sayfa verilerini kullanır.
-sayfa_adi_girdi = input("Sayfa Adı Belirtin: (ya da boş bırakın) ")
+sayfa_adi = 0						# "None" değeri tüm sayfa verilerini kullanır.
+sayfa_adi_girdi = input("Sayfa Adı Belirtin (ya da ENTER tuşu ile geçin. 'None' ibaresi 'tüm sayfalar'ı ifade eder): ")
 if sayfa_adi_girdi:
 	sayfa_adi = sayfa_adi_girdi
 
 
 satir_atla = None
-satir_atla_girdi = input("Atlanacak satır sayısı belirtin: ")
+satir_atla_girdi = input("Atlanacak satır sayısı belirtin (İlk satır BAŞLIK satırı ise, ENTER tuşu ile geçin): ")
 if satir_atla_girdi.isdigit():
 	satir_atla = int(satir_atla_girdi)
 # # print(satir_atla)
 
 
-sutunlar_girdi = input("Sütun aralığı belirtin. (Ör. A:D) : ")
+sutunlar_girdi = input("Sütun aralığı belirtin. (Ör. A:D) (ya da tüm veri barındıran sütunları kullanmak için ENTER tuşu ile geçin): ")
 sutunlar = None
-if sutunlar_girdi:
+if ":" in sutunlar_girdi:
 	sutunlar = sutunlar_girdi.split(":")[0] + ":" + sutunlar_girdi.split(":")[1]
+else:
+	print("Sütun bildirimi hatalı.")
 # # print(sutunlar)
 #####
 
@@ -62,6 +64,7 @@ def VeriCercevesiBasliksiz(dosya_adi):			# Belirtilen dosya adına göre, dosya 
 	return df
 #####
 
+#####
 def tumunu_calistir():
 	for dosya in dosyalar:
 		if dosya == dosyalar[0]:
@@ -75,5 +78,6 @@ def tumunu_calistir():
 
 	print(data_frame)
 	data_frame.to_excel("TUMU.xlsx")    # Tüm dosyalar birleştirildikten sonra sonuç "TUMU.xlsx" ismi ile kaydedilir.
+#####
 
 tumunu_calistir()
